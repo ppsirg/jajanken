@@ -1,0 +1,38 @@
+{% extends "_base_template.html" %}
+{% load static %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block page_title %}{% trans "play jajanken" %}{% endblock page_title %}
+{% block custom_styles %}
+  <link rel="stylesheet" href="{% static "css/app.css" %}">
+{% endblock %}
+
+{% block content %}
+<div class="full-container">
+  {# header block #}
+  <div class="header-container">
+    <div class="game-name">
+      <a href="{% url 'jajanken' %}">jajanken</a>
+    </div>
+    <div class="header-button-bar">
+      <a href="{% url 'scores' %}" class="scores-link header-link"> <img src="{% static 'img/ranking.svg' %}" alt=""></a>
+    </div>
+  </div>
+  {# game block #}
+  <div class="game-container">
+    <div class="game-description">
+      {% trans "Challenge your friends to rock, paper, scissors!!" %}
+    </div>
+    <div class="landing-options">
+      <img src="{% static "img/scissors-red.svg" %}" alt="">
+      <img src="{% static "img/rock-red.svg" %}" alt="">
+      <img src="{% static "img/paper-red.svg" %}" alt="">
+    </div>
+    <div class="action-buttons">
+      <button id="initial_start_button" type="button" name="initial_start_button">Start</button>
+    </div>
+  </div>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+.scores-container{
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  min-width: 280px;
+  min-height: 400px;
+  max-width: 600px;
+}
+.scores-table{
+  width: 100%;
+}
+.centered-cell{
+  text-align: center;
+}
+.rank-cell{
+  background-color: #ede1e7;
+}
+.scores-table-row{
+  border-bottom: 1px solid black;
+}
+.scores-table-row:hover{
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0.5em #f03a95;
+}
+.scores-header-cell{
+  font-family: monospace;
+  font-weight: bolder;
+}

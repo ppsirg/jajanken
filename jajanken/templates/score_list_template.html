@@ -1,0 +1,44 @@
+{% extends "_base_template.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block page_title %}{% trans "players ranking - jajanken" %}{% endblock page_title %}
+{% block custom_styles %}
+  <link rel="stylesheet" href="{% static "css/scores_list.css" %}">
+{% endblock %}
+{% block content %}
+<div class="full-container">
+  {# header block #}
+  <div class="header-container">
+    <div class="game-name">
+      <a href="{% url 'jajanken' %}">jajanken</a>
+    </div>
+    <div class="header-button-bar">
+      <a href="{% url 'scores' %}" class="scores-link header-link"> <img src="{% static 'img/ranking.svg' %}" alt=""></a>
+    </div>
+  </div>
+  {# scores list #}
+  <div class="scores-container">
+    <table class="scores-table">
+      <thead>
+        <th class="scores-header-cell">{% trans "Rank" %}</th>
+        <th class="scores-header-cell">{% trans "Name" %}</th>
+        <th class="scores-header-cell">{% trans "Won" %}</th>
+        <th class="scores-header-cell">{% trans "Lost" %}</th>
+      </thead>
+      <tbody>
+        {% for player_statistic in player_stats  %}
+        <tr class="scores-table-row">
+          <td class="centered-cell">{{player_statistic.rank}}</td>
+          <td class="centered-cell">{{player_statistic.name}}</td>
+          <td class="centered-cell">{{player_statistic.won_matches}}</td>
+          <td class="centered-cell">{{player_statistic.lost_matches}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+</div>
+{% endblock content %}
