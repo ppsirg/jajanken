@@ -15,8 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from players.views import PlayerViewSet
+import games.views as game_view
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'players', PlayerViewSet)
+router.register(r'scores', game_view.PlayerStatsViewSet)
+router.register(r'match', game_view.MatchViewSet)
+router.register(r'match-round', game_view.MatchRoundViewSet)
+router.register(r'match-event', game_view.MatchEventViewSet)
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', include('games.urls'))
+    path('', include('games.urls')),
+    # path('api/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api/', include(router.urls)),
 ]
