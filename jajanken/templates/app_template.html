@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="full-container">
+<div id="app" class="full-container">
   {# header block #}
   <div class="header-container">
     <div class="game-name">
@@ -21,18 +21,23 @@
   </div>
   {# game block #}
   <div class="game-container">
-    <div class="game-description">
-      {% trans "Challenge your friends to rock, paper, scissors!!" %}
-    </div>
-    <div class="landing-options">
-      <img src="{% static "img/scissors-red.svg" %}" alt="">
-      <img src="{% static "img/rock-red.svg" %}" alt="">
-      <img src="{% static "img/paper-red.svg" %}" alt="">
-    </div>
-    <div class="action-buttons">
-      <button id="initial_start_button" type="button" name="initial_start_button">Start</button>
-    </div>
+    <match-control
+    color="red"
+    header_label="{% trans "Challenge your friends to rock, paper, scissors!!" %}"
+    button_label="{% trans "Start" %}"
+    scissors="{% static "img/scissors-red.svg" %}"
+    rock="{% static "img/rock-red.svg" %}"
+    paper="{% static "img/paper-red.svg" %}">
+  </match-control>
+  {# <player-form-name color="blue"></player-form-name> #}
+  {# <player-form-name color="red"></player-form-name> #}
+
+
   </div>
 
 </div>
 {% endblock content %}
+
+{% block custom_js %}
+<script src="{% static "js/app.js" %}" charset="utf-8"></script>
+{% endblock %}

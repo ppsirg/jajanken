@@ -28,6 +28,16 @@
   width: 30%;
   padding: 10px;
 }
+#player-form-name{
+margin-bottom: 40px;
+text-align: center;
+}
+.player-form-name-title{
+  margin-bottom: 20px;
+}
+input[name="playerName"]{
+  margin-bottom: 20px;
+}
 
 /* components body */
 .action-buttons{
