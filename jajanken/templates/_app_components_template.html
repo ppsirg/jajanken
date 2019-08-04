@@ -1,0 +1,35 @@
+<script id="match-control-template" type="text/x-template">
+  <div>
+	<div class="game-description"
+  v-bind:style="{color: real_color}">
+		[[header_label]]
+	</div>
+	<div class="landing-options">
+		<img v-bind:src="scissors_link" alt="scissors">
+		<img v-bind:src="rock_link" alt="rock">
+		<img v-bind:src="paper_link" alt="paper">
+	</div>
+	<div class="action-buttons">
+		<button id="initial_start_button"
+    type="button" name="initial_start_button"
+		v-bind:style="{color: real_color}"
+    v-on:click="swap_color($event)">
+		[[button_label]]
+		</button>
+	</div>
+	</div>
+</script>
+
+<script id="player-form-name-template" type="text/x-template">
+  <div id="player-form-name" class="game-description">
+		<form class="" method="post">
+			<div class="player-form-name-title"
+      v-bind:style="{color: real_color}">introduce your name</div>
+			<input type="text" name="playerName"
+      v-bind:style='{color: real_color, border: "3px solid " + real_color}' value="">
+			<button name="save-user-button"
+			v-bind:style="{color: real_color}"
+      v-on:click="swap_color($event)">Ready!!</button>
+		</form>
+	</div>
+</script>

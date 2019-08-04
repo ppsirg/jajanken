@@ -21,21 +21,38 @@
   </div>
   {# game block #}
   <div class="game-container">
-    <match-control
-    color="red"
-    header_label="{% trans "Challenge your friends to rock, paper, scissors!!" %}"
-    button_label="{% trans "Start" %}"
+    <div v-show="scores_enabled" class="score-bar">
+      <div class="score-cell">
+        <img src="{% static "img/rock-red.svg" %}" alt="">
+        <span>[[scores.red]]</span>
+      </div>
+      <div class="score-cell">
+        <img src="{% static "img/rock-blue.svg" %}" alt="">
+        <span>[[scores.blue]]</span>
+      </div>
+    </div>
+    <match-control v-show="move_component_shown"
+    v-bind:color="color_name+'move'"
+    :key="color_name+'move'"
+    v-on:swap_color="on_swap_method"
+    header_label="{% trans "Make your move!!" %}"
+    button_label="{% trans "GO!" %}"
     scissors="{% static "img/scissors-red.svg" %}"
     rock="{% static "img/rock-red.svg" %}"
     paper="{% static "img/paper-red.svg" %}">
-  </match-control>
-  {# <player-form-name color="blue"></player-form-name> #}
-  {# <player-form-name color="red"></player-form-name> #}
+    </match-control>
+    <player-form-name
+    v-show="name_component_shown"
+    v-bind:color="color_name"
+    :key="color_name"
+    v-on:swap_color="on_swap_method"
+    ></player-form-name>
 
 
   </div>
 
 </div>
+{% include "_app_components_template.html" %}
 {% endblock content %}
 
 {% block custom_js %}

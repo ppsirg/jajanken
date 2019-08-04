@@ -1,4 +1,4 @@
-from .models import MatchEvent, MatchRound, Match, PlayerStats
+from .models import MatchEvent, MatchRound, Match
 from rest_framework import serializers
 
 
@@ -18,9 +18,3 @@ class MatchRoundSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = MatchRound
         fields = ['match']
-
-
-class PlayerStatsSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = PlayerStats
-        fields = ['player', 'victories', 'defeats', 'ties']

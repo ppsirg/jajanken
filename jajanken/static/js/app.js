@@ -9,38 +9,23 @@ Vue.component('player-form-name',{
 		'color',
 	],
 	computed: {
-		player_color: function () {
-			let real_color = this.get_true_color();
-			return 'color: ' + real_color + ';';
+		real_color: function () {
+			return color_equivalences[this.key_color];
 		},
-		player_border: function () {
-			let real_color = this.get_true_color();
-			return 'border: 3px solid ' + real_color + '; color: '+real_color+';';
-		}
+		key_color: function () {
+			let red_pattern = /.*red.*/;
+			return red_pattern.test(this.color) ? 'red':'blue';
+		},
 	},
 	methods: {
-		get_true_color: function () {
-			let real_color = color_equivalences[this.color];
-			return real_color;
+		swap_color: function (event) {
+			event.preventDefault();
+			this.$emit('swap_color', this);
 		}
 	},
-	template: `
-	<div id="player-form-name" class="game-description">
-		<form class="" method="post">
-			<div class="player-form-name-title" v-bind:style="player_color">introduce your name</div>
-			<input type="text" name="playerName" v-bind:style='player_border' value="">
-			<button type="submit" name="save-user-button" v-bind:style="player_color">Ready!!</button>
-		</form>
-	</div>
-	`
+	template: `#player-form-name-template`,
 })
-Vue.component('roundSelector',{
-	delimiters: ['[[', ']]'],
-	template: `
-	<div>
-	</div>
-	`
-})
+
 Vue.component('match-control',{
 	delimiters: ['[[', ']]'],
 	props: [
@@ -49,48 +34,61 @@ Vue.component('match-control',{
 		'paper',
 		'color',
 		'header_label',
-		'button_label'
+		'button_label',
   ],
-	data: function(){
-  	return {
-    	players_color: 'color: [[this.color]];',
-    }
-  },
 	computed: {
-		player_color: function () {
-			let real_color = color_equivalences[this.color];
-			return 'color: ' + real_color + ';';
+		real_color: function () {
+			return color_equivalences[this.key_color];
+		},
+		key_color: function () {
+			let red_pattern = /.*red.*/;
+			return red_pattern.test(this.color) ? 'red':'blue';
+		},
+		scissors_link: function() {
+			return this.color_aware_url(this.scissors, this.key_color);
+		},
+		rock_link: function() {
+			return this.color_aware_url(this.rock, this.key_color);
+		},
+		paper_link: function() {
+			return this.color_aware_url(this.paper, this.key_color);
+		},
+	},
+	methods: {
+		color_aware_url: function (url, color) {
+			let red_pattern = /.+-red\.svg/;
+			let current_color = red_pattern.test(url) ? '-red.' : '-blue.';
+			let new_color = '-' + color + '.';
+			return url.replace(current_color, new_color);
+		},
+		swap_color: function (event) {
+			event.preventDefault();
+			this.$emit('swap_color', this);
 		}
 	},
-	template: `
-	<div>
-	<div class="game-description" v-bind:style="player_color">
-		[[header_label]]
-	</div>
-	<div class="landing-options">
-		<img v-bind:src="scissors" alt="scissors">
-		<img v-bind:src="rock" alt="rock">
-		<img v-bind:src="paper" alt="paper">
-	</div>
-	<div class="action-buttons">
-		<button id="initial_start_button" type="button" name="initial_start_button">[[button_label]]</button>
-	</div>
-	</div>
-	`
-})
-Vue.component('matchEnder',{
-	delimiters: ['[[', ']]'],
-	template: `
-	<div>
-	</div>
-	`
+	template: `#match-control-template`,
 })
 
 
-
-window.onload = function () {
+// window.onload = function () {
 	var app = new Vue({
 	el: '#app',
 	delimiters: ['[[', ']]'],
+	data: {
+		color_name: 'red',
+		scores: {red:0, blue:0},
+		initial_component: false,
+		scores_enabled: false,
+		name_component_shown: false,
+		move_component_shown: true,
+		final_component: false,
+	},
+	methods: {
+		on_swap_method: function (current_obj) {
+			let new_color = current_obj.key_color == 'red' ? "blue": "red";
+			this.color_name = new_color;
+			current_obj.$forceUpdate();
+		}
+	},
 	})
-}
+// }

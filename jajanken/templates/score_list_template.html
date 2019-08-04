@@ -23,16 +23,14 @@
       <thead>
         <th class="scores-header-cell">{% trans "Rank" %}</th>
         <th class="scores-header-cell">{% trans "Name" %}</th>
-        <th class="scores-header-cell">{% trans "Won" %}</th>
-        <th class="scores-header-cell">{% trans "Lost" %}</th>
+        <th class="scores-header-cell">{% trans "Won Matches" %}</th>
       </thead>
       <tbody>
-        {% for player_statistic in player_stats  %}
+        {% for player_statistic in object_list  %}
         <tr class="scores-table-row">
-          <td class="centered-cell">{{player_statistic.rank}}</td>
+          <td class="centered-cell">{{forloop.counter}}</td>
           <td class="centered-cell">{{player_statistic.name}}</td>
           <td class="centered-cell">{{player_statistic.won_matches}}</td>
-          <td class="centered-cell">{{player_statistic.lost_matches}}</td>
         </tr>
         {% endfor %}
       </tbody>

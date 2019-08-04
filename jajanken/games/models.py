@@ -119,14 +119,3 @@ class Match(models.Model):
 
     def __str__(self):
         return ' and '.join([self.red_player, self.blue_player])
-
-
-class PlayerStats(models.Model):
-    """Player playing record."""
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    victories = models.IntegerField()
-    defeats = models.IntegerField()
-    ties = models.IntegerField()
-
-    def __str__(self):
-        return '{} won {} times'.format(self.player, self.victories)

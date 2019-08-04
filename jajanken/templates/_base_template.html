@@ -8,11 +8,11 @@
     <title>{% block page_title %}{% endblock page_title %}</title>
     <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
     <link rel="stylesheet" href="{% static "css/base.css" %}">
-    <script src="{% static "vendor/vue.js" %}" charset="utf-8"></script>
     {% block custom_styles %}{% endblock custom_styles %}
-    {% block custom_js %}{% endblock custom_js %}
   </head>
   <body>
     {% block content %}{% endblock content %}
   </body>
+  <script src="{% static "vendor/vue.min.js" %}" charset="utf-8"></script>
+  {% block custom_js %}{% endblock custom_js %}
 </html>
