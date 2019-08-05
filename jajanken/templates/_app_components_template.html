@@ -1,4 +1,8 @@
-<script id="match-control-template" type="text/x-template">
+{% load static %}
+{% load staticfiles %}
+{% load i18n %}
+
+<script id="match-initial-template" type="text/x-template">
   <div>
 	<div class="game-description"
   v-bind:style="{color: real_color}">
@@ -20,16 +24,53 @@
 	</div>
 </script>
 
+<script id="match-control-template" type="text/x-template">
+  <div>
+	<div class="game-description"
+  v-bind:style="{color: real_color}">
+		[[header_label]]
+	</div>
+  <form v-bind:action="action_url" method="post">
+	<div class="landing-options">
+		<img v-bind:src="scissors_link" alt="scissors">
+		<img v-bind:src="rock_link" alt="rock">
+		<img v-bind:src="paper_link" alt="paper">
+	</div>
+	<div class="action-buttons">
+		<button id="initial_start_button"
+    type="button" name="initial_start_button"
+		v-bind:style="{color: real_color}"
+    v-on:click="swap_event($event)">
+		[[button_label]]
+		</button>
+  </form>
+	</div>
+	</div>
+</script>
+
 <script id="player-form-name-template" type="text/x-template">
   <div id="player-form-name" class="game-description">
 		<form class="" method="post">
 			<div class="player-form-name-title"
-      v-bind:style="{color: real_color}">introduce your name</div>
+      v-bind:style="{color: real_color}">{% trans "introduce your name" %}</div>
 			<input type="text" name="playerName"
       v-bind:style='{color: real_color, border: "3px solid " + real_color}' value="">
 			<button name="save-user-button"
 			v-bind:style="{color: real_color}"
-      v-on:click="swap_color($event)">Ready!!</button>
+      v-on:click="swap_color($event)">{% trans "Ready!!" %}</button>
 		</form>
 	</div>
+</script>
+
+<script id="score-button-template" type="text/x-template">
+  <div class="score-cell">
+    <img v-bind:src="img_url" alt="color">
+    <span><slot></slot></span>
+  </div>
+</script>
+
+<script id="scores-bar-template" type="text/x-template">
+  <div class="score-bar">
+    <slot></slot>
+  </div>
 </script>

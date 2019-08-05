@@ -61,14 +61,37 @@ Vue.component('match-control',{
 			let new_color = '-' + color + '.';
 			return url.replace(current_color, new_color);
 		},
-		swap_color: function (event) {
+		swap_state: function (event) {
 			event.preventDefault();
-			this.$emit('swap_color', this);
+			if (this.button_label == 'START!!') {
+				this.$emit('swap_component', this);
+			} else {
+				this.$emit('swap_color', this);
+
+			}
 		}
 	},
 	template: `#match-control-template`,
 })
 
+Vue.component('scores-bar', {
+	delimiters: ['[[', ']]'],
+	template: '#scores-bar-template'
+})
+
+Vue.component('score-button', {
+	delimiters: ['[[', ']]'],
+	props: [
+		'img_url'
+	],
+	computed: {
+		color: function () {
+			let red_pattern = /.*red.*/;
+			return red_pattern.test(this.img_url) ? 'red':'blue';
+		}
+	},
+	template: '#score-button-template'
+})
 
 // window.onload = function () {
 	var app = new Vue({
@@ -77,17 +100,25 @@ Vue.component('match-control',{
 	data: {
 		color_name: 'red',
 		scores: {red:0, blue:0},
-		initial_component: false,
+		initial_component: true,
 		scores_enabled: false,
 		name_component_shown: false,
-		move_component_shown: true,
-		final_component: false,
+		move_component_shown: false,
 	},
 	methods: {
-		on_swap_method: function (current_obj) {
+		on_swap_color: function (current_obj) {
 			let new_color = current_obj.key_color == 'red' ? "blue": "red";
 			this.color_name = new_color;
 			current_obj.$forceUpdate();
+		},
+		on_swap_component: function (current_obj) {
+			if (this.initial_component) {
+				this.initial_component = false;
+				this.name_component_shown = true;
+			} else if (this.name_component_shown) {
+				this.name_component_shown = false;
+				this.move_component_shown = true;
+			}
 		}
 	},
 	})
