@@ -14,7 +14,7 @@ class ScoresView(ListView):
     model = Player
 
     def get_ordering(self):
-        return 'won_matches'
+        return '-won_matches'
 
 
 class PlayerViewSet(viewsets.ModelViewSet):

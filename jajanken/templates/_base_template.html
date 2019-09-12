@@ -9,7 +9,13 @@
     <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
     <link rel="stylesheet" href="{% static "css/base.css" %}">
     {% block custom_styles %}{% endblock custom_styles %}
+    <script type="text/javascript">
+      var csrftoken_raw = '{% csrf_token %}';
+      csrftoken_raw = csrftoken_raw.split('value="');
+      var csrfmiddlewaretoken_dj = csrftoken_raw[1].slice(0,csrftoken_raw [1].length - 2);
+    </script>
     <script src="{% static "vendor/vue.js" %}" charset="utf-8"></script>
+    <script src="{% static "vendor/axios.js" %}"></script>
   </head>
   <body>
     {% block content %}{% endblock content %}

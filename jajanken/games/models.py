@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from players.models import Player
 from .choices import JAJANKEN_CHOICES, JAJANKEN_BEAT_RULES
 
 
 class MatchEvent(models.Model):
-    """Game Player."""
+    """Match event in game."""
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     choice = models.CharField(max_length=1, choices=JAJANKEN_CHOICES)
     match_round = models.ForeignKey('MatchRound', on_delete=models.CASCADE)
@@ -19,6 +21,12 @@ class MatchEvent(models.Model):
 
         """
         return [a[1] for a in JAJANKEN_CHOICES if self.choice == a[0]][0]
+
+    def save(self, *args, **kwargs):
+        """Override save to avoid more than 2 events per MatchRound"""
+        if MatchEvent.objects.filter(match_round=self.match_round).count() >= 2:
+            raise Exception('cant have more eventt per round')
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return '{0.str_choice} {0.player.name}'.format(self)
@@ -70,6 +78,12 @@ class MatchRound(models.Model):
             )
             return red_player_event.player if scenario in JAJANKEN_BEAT_RULES else blue_player_event.player
 
+    def save(self, *args, **kwargs):
+        """Override save to avoid more than 3 rounds per match"""
+        if MatchRound.objects.filter(match=self.match).count() >= 3:
+            raise Exception('cant have more matchrouns per match')
+        super().save(*args, **kwargs)
+
     def __str__(self):
         winner = self.winner()
         return '{0}'.format(
@@ -117,5 +131,12 @@ class Match(models.Model):
         else:
             return self.blue_player
 
+    def save(self, *args, **kwargs):
+        """Override save to avoid having matches with yourself"""
+        if self.red_player == self.blue_player:
+            raise Exception('cant have a match with yourself')
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return ' and '.join([self.red_player, self.blue_player])
+        return ' and '.join(map(str, [self.red_player, self.blue_player]))
+    
