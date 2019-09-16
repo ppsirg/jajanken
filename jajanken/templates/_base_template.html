@@ -14,7 +14,9 @@
       csrftoken_raw = csrftoken_raw.split('value="');
       var csrfmiddlewaretoken_dj = csrftoken_raw[1].slice(0,csrftoken_raw [1].length - 2);
     </script>
-    <script src="{% static "vendor/vue.js" %}" charset="utf-8"></script>
+    {# for front development,uncoment #}
+    {# <script src="{% static "vendor/vue.js" %}" charset="utf-8"></script> #}
+    <script src="{% static "vendor/vue.min.js" %}" charset="utf-8"></script>
     <script src="{% static "vendor/axios.js" %}"></script>
   </head>
   <body>

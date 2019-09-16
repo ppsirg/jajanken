@@ -21,35 +21,43 @@
   </div>
   {# game block #}
   <div class="game-container">
+
     <scores-bar v-show="scores_enabled">
       <score-button img_url="{% static "img/rock-red.svg" %}" >[[scores.red]]</score-button>
       <score-button img_url="{% static "img/rock-blue.svg" %}" >[[scores.blue]]</score-button>
     </scores-bar>
-    <match-control v-show="move_component_shown"
-    v-bind:color="color_name+'move'"
-    :key="color_name+'move'"
-    v-on:swap_color="on_swap_color"
-    v-on:swap_component="on_swap_component"
-    header_label="{% trans "Make your move!!" %}"
-    button_label="{% trans "GO!" %}"
-    scissors="{% static "img/scissors-red.svg" %}"
-    rock="{% static "img/rock-red.svg" %}"
-    paper="{% static "img/paper-red.svg" %}">
-    </match-control>
+
     <match-control v-show="initial_component"
     color="color_name"
     v-on:swap_component="on_swap_component"
     header_label="{% trans "Challenge your friends to jajanken!!" %}"
     button_label="{% trans "START!!" %}"
+    form_enabled="no"
     scissors="{% static "img/scissors-red.svg" %}"
     rock="{% static "img/rock-red.svg" %}"
     paper="{% static "img/paper-red.svg" %}">
     </match-control>
+
+    <match-control v-show="move_component_shown"
+    v-bind:color="color_name+'move'"
+    :key="color_name+'move'"
+    v-on:swap_color="on_swap_color_control"
+    v-on:swap_component="on_swap_component"
+    header_label="{% trans "Make your move!!" %}"
+    button_label="{% trans "GO!" %}"
+    form_enabled="yes"
+    scissors="{% static "img/scissors-red.svg" %}"
+    rock="{% static "img/rock-red.svg" %}"
+    paper="{% static "img/paper-red.svg" %}"
+    action_url="none">
+    </match-control>
+
     <player-form-name
     v-show="name_component_shown"
     v-bind:color="color_name"
     :key="color_name"
-    v-on:swap_color="on_swap_method"
+    v-on:swap_color="on_swap_color_form_name"
+    v-on:swap_component="on_swap_component"
     ></player-form-name>
 
 
@@ -62,6 +70,8 @@
 {% block custom_js %}
 <script src="{% static "js/game_utils.js" %}" ></script>
 <script src="{% static "js/api_comunication.js" %}" ></script>
-<script src="{% static "js/game_skeleton.js" %}" ></script>
+{# uncomment two following scripts for api testing #}
+{# <script src="{% static "js/game_skeleton.js" %}" ></script> #}
+<script src="{% static "js/game_components.js" %}" ></script>
 <script src="{% static "js/app.js" %}" ></script>
 {% endblock %}
